@@ -97,7 +97,11 @@ search, and recommendations.
 4. Redirect URI: `http://127.0.0.1:8000/api/auth/spotify/callback` (exactly this, with
    `127.0.0.1`, not `localhost`). Add the deployed URL later when there is one.
 5. Under "Which API/SDKs are you planning to use?", tick **Web API**.
-6. Save, open the app's **Settings**, and copy the **Client ID**. The client secret is not needed
-   because sign-in uses PKCE. Do not paste either into code or chat.
+6. Save, open the app's **Settings**, and copy the **Client ID**. The Client ID is not a secret
+   when sign-in uses PKCE, so it is fine to share with whoever is setting up the app. The
+   **client secret** is not needed at all: never share it or put it in the repo.
 7. On **User Management**, add the Spotify accounts (name and email) allowed to use the app, up to 5.
-8. Put the Client ID in `backend/.env` as `PLAYLISTIQ_SPOTIFY_CLIENT_ID=...`.
+8. Only once live sign-in is built: on the computer that runs the app, create a text file named
+   `.env` inside the `backend` folder containing one line,
+   `PLAYLISTIQ_SPOTIFY_CLIENT_ID=your-client-id`. The `.env` file is ignored by git, so it never
+   reaches GitHub. `.env.example` in the repository root lists every optional setting.
