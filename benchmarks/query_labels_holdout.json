@@ -1,0 +1,236 @@
+{
+ "playlist_id": "demo-late-night",
+ "notes": "Held-out queries written before the parser was tuned on query_labels.json. Same author, so this is a sanity check, not an independent benchmark.",
+ "queries": [
+  {
+   "query": "just Rosa Vega please",
+   "include_artists": [
+    "Rosa Vega"
+   ]
+  },
+  {
+   "query": "nothing by Marlo Vance",
+   "exclude_artists": [
+    "Marlo Vance"
+   ]
+  },
+  {
+   "query": "Kiro and Gold Coast but not the Gold Coast album",
+   "include_artists": [
+    "Kiro",
+    "Gold Coast"
+   ],
+   "exclude_albums": [
+    "Gold Coast"
+   ]
+  },
+  {
+   "query": "Afterglow and Signals, random order",
+   "include_albums": [
+    "Afterglow",
+    "Signals"
+   ],
+   "shuffle_mode": "random"
+  },
+  {
+   "query": "Vesper Lane minus Blue Hour",
+   "include_artists": [
+    "Vesper Lane"
+   ],
+   "exclude_albums": [
+    "Blue Hour"
+   ]
+  },
+  {
+   "query": "Hollis Gray with at least 3 songs between artists",
+   "include_artists": [
+    "Hollis Gray"
+   ],
+   "shuffle_mode": "balanced",
+   "minimum_artist_gap": 3
+  },
+  {
+   "query": "only Theo Marsh, newest first",
+   "include_artists": [
+    "Theo Marsh"
+   ],
+   "shuffle_mode": "recently_added"
+  },
+  {
+   "query": "Echo songs",
+   "expect": [
+    "ambiguous"
+   ]
+  },
+  {
+   "query": "no Homecoming",
+   "expect": [
+    "ambiguous"
+   ]
+  },
+  {
+   "query": "play Drake",
+   "expect": [
+    "unrecognized"
+   ]
+  },
+  {
+   "query": "Kiro, most popular first",
+   "include_artists": [
+    "Kiro"
+   ],
+   "expect": [
+    "unsupported"
+   ]
+  },
+  {
+   "query": "Marlo Vance from Midnight Promises",
+   "include_artists": [
+    "Marlo Vance"
+   ],
+   "include_albums": [
+    "Midnight Promises"
+   ]
+  },
+  {
+   "query": "Brasswood, Ottoline, Kestrel",
+   "include_artists": [
+    "Brasswood",
+    "Ottoline",
+    "Kestrel"
+   ]
+  },
+  {
+   "query": "everything except Marlo Vance and J. Calder",
+   "exclude_artists": [
+    "Marlo Vance",
+    "J. Calder"
+   ]
+  },
+  {
+   "query": "Kiro no back to back, seed 99",
+   "include_artists": [
+    "Kiro"
+   ],
+   "shuffle_mode": "balanced",
+   "minimum_artist_gap": 1,
+   "seed": 99
+  },
+  {
+   "query": "songs from Saltwater or Cold Rivers",
+   "include_albums": [
+    "Saltwater",
+    "Cold Rivers"
+   ]
+  },
+  {
+   "query": "only lead artist Kiro",
+   "include_artists": [
+    "Kiro"
+   ],
+   "primary_artist_only": true
+  },
+  {
+   "query": "Ivy Calder but not J. Calder",
+   "include_artists": [
+    "Ivy Calder"
+   ],
+   "exclude_artists": [
+    "J. Calder"
+   ]
+  },
+  {
+   "query": "sad songs only",
+   "expect": [
+    "unsupported"
+   ]
+  },
+  {
+   "query": "only Marlo Vance but skip Kiro features",
+   "include_artists": [
+    "Marlo Vance"
+   ],
+   "exclude_artists": [
+    "Kiro"
+   ]
+  },
+  {
+   "query": "strictly random",
+   "shuffle_mode": "random",
+   "strict_constraints": true
+  },
+  {
+   "query": "Dusk Theory and Low Orbit spread out",
+   "include_artists": [
+    "Dusk Theory",
+    "Low Orbit"
+   ],
+   "shuffle_mode": "balanced"
+  },
+  {
+   "query": "give me Femi Adair and Kai Okonjo, no same artist twice in a row",
+   "include_artists": [
+    "Femi Adair",
+    "Kai Okonjo"
+   ],
+   "shuffle_mode": "balanced",
+   "minimum_artist_gap": 1
+  },
+  {
+   "query": "The Lanterns from Wicks",
+   "include_artists": [
+    "The Lanterns"
+   ],
+   "include_albums": [
+    "Wicks"
+   ]
+  },
+  {
+   "query": "Nia Solstice excluding Saltwater",
+   "include_artists": [
+    "Nia Solstice"
+   ],
+   "exclude_albums": [
+    "Saltwater"
+   ]
+  },
+  {
+   "query": "Northern Lights only but no Marlo Vance",
+   "include_albums": [
+    "Northern Lights"
+   ],
+   "exclude_artists": [
+    "Marlo Vance"
+   ]
+  },
+  {
+   "query": "Pilot Season or Polar Twin, gap of 2",
+   "include_artists": [
+    "Pilot Season",
+    "Polar Twin"
+   ],
+   "shuffle_mode": "balanced",
+   "minimum_artist_gap": 2
+  },
+  {
+   "query": "songs released after 2020",
+   "expect": [
+    "unsupported"
+   ]
+  },
+  {
+   "query": "Sora Lin and Yara Benn and Willa Stone",
+   "include_artists": [
+    "Sora Lin",
+    "Yara Benn",
+    "Willa Stone"
+   ]
+  },
+  {
+   "query": "all of Southside Tapes",
+   "include_albums": [
+    "Southside Tapes"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #f7f7f5;
+  --surface: #ffffff;
+  --surface-2: #f0f0ec;
+  --border: #e2e2dc;
+  --text: #1b1c1a;
+  --muted: #62645e;
+  --accent: #0f766e;
+  --accent-soft: #d6f0ec;
+  --danger: #b42318;
+  --danger-soft: #fde7e4;
+  --warn: #8a5a00;
+  --warn-soft: #fdf1d6;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121311;
+    --surface: #1b1c1a;
+    --surface-2: #242522;
+    --border: #33352f;
+    --text: #ecece8;
+    --muted: #a3a59d;
+    --accent: #2dd4bf;
+    --accent-soft: #123a35;
+    --danger: #f97066;
+    --danger-soft: #3d1a17;
+    --warn: #fbbf24;
+    --warn-soft: #3a2e10;
+  }
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}

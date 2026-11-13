@@ -1,0 +1,884 @@
+{
+ "playlist_id": "demo-late-night",
+ "notes": "Hand-labeled queries for the deterministic parser. Album names written as 'Title@Artist' pick one of several same-titled albums. Unspecified fields mean the default (balanced, gap 1, not strict, no seed).",
+ "queries": [
+  {
+   "query": "Only Marlo Vance",
+   "include_artists": [
+    "Marlo Vance"
+   ]
+  },
+  {
+   "query": "No Marlo Vance",
+   "exclude_artists": [
+    "Marlo Vance"
+   ]
+  },
+  {
+   "query": "Marlo Vance and J. Calder except Overlook",
+   "include_artists": [
+    "Marlo Vance",
+    "J. Calder"
+   ],
+   "exclude_albums": [
+    "Overlook",
+    "Overlook (Deluxe)"
+   ]
+  },
+  {
+   "query": "J. Calder from The Long Season",
+   "include_artists": [
+    "J. Calder"
+   ],
+   "include_albums": [
+    "The Long Season"
+   ]
+  },
+  {
+   "query": "No same artist back-to-back",
+   "shuffle_mode": "balanced",
+   "minimum_artist_gap": 1
+  },
+  {
+   "query": "Play only songs from Northern Lights that are already in this playlist",
+   "include_albums": [
+    "Northern Lights"
+   ]
+  },
+  {
+   "query": "Marlo Vance but no Marlo Vance",
+   "expect": [
+    "contradiction"
+   ]
+  },
+  {
+   "query": "Only Echo",
+   "expect": [
+    "ambiguous"
+   ]
+  },
+  {
+   "query": "Songs from Homecoming",
+   "expect": [
+    "ambiguous"
+   ]
+  },
+  {
+   "query": "Nia Solstice from Homecoming",
+   "include_artists": [
+    "Nia Solstice"
+   ],
+   "include_albums": [
+    "Homecoming@Nia Solstice"
+   ]
+  },
+  {
+   "query": "The Static Hours from Homecoming",
+   "include_artists": [
+    "The Static Hours"
+   ],
+   "include_albums": [
+    "Homecoming@The Static Hours"
+   ]
+  },
+  {
+   "query": "only Kiro",
+   "include_artists": [
+    "Kiro"
+   ]
+  },
+  {
+   "query": "only Lumen Hart",
+   "include_artists": [
+    "Lumen Hart"
+   ]
+  },
+  {
+   "query": "only Sable & Tide",
+   "include_artists": [
+    "Sable & Tide"
+   ]
+  },
+  {
+   "query": "only Vesper Lane",
+   "include_artists": [
+    "Vesper Lane"
+   ]
+  },
+  {
+   "query": "only Ottoline",
+   "include_artists": [
+    "Ottoline"
+   ]
+  },
+  {
+   "query": "only Ivy Calder",
+   "include_artists": [
+    "Ivy Calder"
+   ]
+  },
+  {
+   "query": "only Hollis Gray",
+   "include_artists": [
+    "Hollis Gray"
+   ]
+  },
+  {
+   "query": "only Brasswood",
+   "include_artists": [
+    "Brasswood"
+   ]
+  },
+  {
+   "query": "only Cass Ferro",
+   "include_artists": [
+    "Cass Ferro"
+   ]
+  },
+  {
+   "query": "only Pilot Season",
+   "include_artists": [
+    "Pilot Season"
+   ]
+  },
+  {
+   "query": "only Rue Morrow",
+   "include_artists": [
+    "Rue Morrow"
+   ]
+  },
+  {
+   "query": "only Low Orbit",
+   "include_artists": [
+    "Low Orbit"
+   ]
+  },
+  {
+   "query": "only Polar Twin",
+   "include_artists": [
+    "Polar Twin"
+   ]
+  },
+  {
+   "query": "only Femi Adair",
+   "include_artists": [
+    "Femi Adair"
+   ]
+  },
+  {
+   "query": "only Tamsin Vale",
+   "include_artists": [
+    "Tamsin Vale"
+   ]
+  },
+  {
+   "query": "everything except Kiro",
+   "exclude_artists": [
+    "Kiro"
+   ]
+  },
+  {
+   "query": "everything except Lumen Hart",
+   "exclude_artists": [
+    "Lumen Hart"
+   ]
+  },
+  {
+   "query": "everything except Nia Solstice",
+   "exclude_artists": [
+    "Nia Solstice"
+   ]
+  },
+  {
+   "query": "everything except Indigo Ravel",
+   "exclude_artists": [
+    "Indigo Ravel"
+   ]
+  },
+  {
+   "query": "everything except Kai Okonjo",
+   "exclude_artists": [
+    "Kai Okonjo"
+   ]
+  },
+  {
+   "query": "everything except Dusk Theory",
+   "exclude_artists": [
+    "Dusk Theory"
+   ]
+  },
+  {
+   "query": "everything except Juno Park",
+   "exclude_artists": [
+    "Juno Park"
+   ]
+  },
+  {
+   "query": "everything except Mae Arden",
+   "exclude_artists": [
+    "Mae Arden"
+   ]
+  },
+  {
+   "query": "everything except Harlow Quinn",
+   "exclude_artists": [
+    "Harlow Quinn"
+   ]
+  },
+  {
+   "query": "everything except Delta Rae Fox",
+   "exclude_artists": [
+    "Delta Rae Fox"
+   ]
+  },
+  {
+   "query": "play Kiro and Lumen Hart",
+   "include_artists": [
+    "Kiro",
+    "Lumen Hart"
+   ]
+  },
+  {
+   "query": "play Grey Atlas and Otis Crane",
+   "include_artists": [
+    "Grey Atlas",
+    "Otis Crane"
+   ]
+  },
+  {
+   "query": "play Arlo Banks and Paris Rook",
+   "include_artists": [
+    "Arlo Banks",
+    "Paris Rook"
+   ]
+  },
+  {
+   "query": "play Willa Stone and Nico Varga",
+   "include_artists": [
+    "Willa Stone",
+    "Nico Varga"
+   ]
+  },
+  {
+   "query": "play Sora Lin and Yara Benn",
+   "include_artists": [
+    "Sora Lin",
+    "Yara Benn"
+   ]
+  },
+  {
+   "query": "play The Lanterns and June & The Hollows",
+   "include_artists": [
+    "The Lanterns",
+    "June & The Hollows"
+   ]
+  },
+  {
+   "query": "Calloway Sound or Leila Moreau songs",
+   "include_artists": [
+    "Calloway Sound",
+    "Leila Moreau"
+   ]
+  },
+  {
+   "query": "Bastian Cole or Fable Drive songs",
+   "include_artists": [
+    "Bastian Cole",
+    "Fable Drive"
+   ]
+  },
+  {
+   "query": "Kestrel or Rosa Vega songs",
+   "include_artists": [
+    "Kestrel",
+    "Rosa Vega"
+   ]
+  },
+  {
+   "query": "no Kiro and no Lumen Hart",
+   "exclude_artists": [
+    "Kiro",
+    "Lumen Hart"
+   ]
+  },
+  {
+   "query": "skip Theo Marsh, Petra Lune and Remy Sato",
+   "exclude_artists": [
+    "Theo Marsh",
+    "Petra Lune",
+    "Remy Sato"
+   ]
+  },
+  {
+   "query": "without Mint Condition Club",
+   "exclude_artists": [
+    "Mint Condition Club"
+   ]
+  },
+  {
+   "query": "leave out Aurora Vey please",
+   "exclude_artists": [
+    "Aurora Vey"
+   ]
+  },
+  {
+   "query": "everything but not Atlas & Wren",
+   "exclude_artists": [
+    "Atlas & Wren"
+   ]
+  },
+  {
+   "query": "no Kiro, only Lumen Hart and Sable & Tide",
+   "include_artists": [
+    "Lumen Hart",
+    "Sable & Tide"
+   ],
+   "exclude_artists": [
+    "Kiro"
+   ]
+  },
+  {
+   "query": "Hugo Ash plus Silas Reed minus Ezra Bloom",
+   "include_artists": [
+    "Hugo Ash",
+    "Silas Reed"
+   ],
+   "exclude_artists": [
+    "Ezra Bloom"
+   ]
+  },
+  {
+   "query": "songs from Afterglow",
+   "include_albums": [
+    "Afterglow"
+   ]
+  },
+  {
+   "query": "only the Saltwater album",
+   "include_albums": [
+    "Saltwater"
+   ]
+  },
+  {
+   "query": "Northern Lights and After Hours Club",
+   "include_albums": [
+    "Northern Lights",
+    "After Hours Club"
+   ]
+  },
+  {
+   "query": "Marlo Vance but not Overlook or Northern Lights",
+   "include_artists": [
+    "Marlo Vance"
+   ],
+   "exclude_albums": [
+    "Overlook",
+    "Overlook (Deluxe)",
+    "Northern Lights"
+   ]
+  },
+  {
+   "query": "Porch Light",
+   "include_albums": [
+    "Porch Light",
+    "Porch Light (Remastered 2021)"
+   ]
+  },
+  {
+   "query": "Porch Light, strictly no repeats back to back",
+   "include_albums": [
+    "Porch Light",
+    "Porch Light (Remastered 2021)"
+   ],
+   "shuffle_mode": "balanced",
+   "minimum_artist_gap": 1,
+   "strict_constraints": true
+  },
+  {
+   "query": "J. Calder except Porch Light",
+   "include_artists": [
+    "J. Calder"
+   ],
+   "exclude_albums": [
+    "Porch Light",
+    "Porch Light (Remastered 2021)"
+   ]
+  },
+  {
+   "query": "Kiro from Paper Planes Club",
+   "include_artists": [
+    "Kiro"
+   ],
+   "include_albums": [
+    "Paper Planes Club"
+   ]
+  },
+  {
+   "query": "Lumen Hart off Signals",
+   "include_artists": [
+    "Lumen Hart"
+   ],
+   "include_albums": [
+    "Signals"
+   ]
+  },
+  {
+   "query": "everything except Southside Tapes",
+   "exclude_albums": [
+    "Southside Tapes"
+   ]
+  },
+  {
+   "query": "no Summer Sessions Vol. 2",
+   "exclude_albums": [
+    "Summer Sessions Vol. 2"
+   ]
+  },
+  {
+   "query": "tracks from Feedback Loops",
+   "include_albums": [
+    "Feedback Loops"
+   ]
+  },
+  {
+   "query": "Waveform album only",
+   "include_albums": [
+    "Waveform"
+   ]
+  },
+  {
+   "query": "songs off Undertow and Blue Hour",
+   "include_albums": [
+    "Undertow",
+    "Blue Hour"
+   ]
+  },
+  {
+   "query": "Overlook deluxe",
+   "include_albums": [
+    "Overlook (Deluxe)"
+   ]
+  },
+  {
+   "query": "only Overlook",
+   "include_albums": [
+    "Overlook",
+    "Overlook (Deluxe)"
+   ]
+  },
+  {
+   "query": "The Long Season but skip nothing",
+   "include_albums": [
+    "The Long Season"
+   ]
+  },
+  {
+   "query": "Gold Coast",
+   "expect": [
+    "ambiguous"
+   ]
+  },
+  {
+   "query": "songs by Gold Coast",
+   "include_artists": [
+    "Gold Coast"
+   ]
+  },
+  {
+   "query": "Gold Coast songs",
+   "include_artists": [
+    "Gold Coast"
+   ]
+  },
+  {
+   "query": "from Gold Coast",
+   "include_albums": [
+    "Gold Coast"
+   ]
+  },
+  {
+   "query": "the Gold Coast album",
+   "include_albums": [
+    "Gold Coast"
+   ]
+  },
+  {
+   "query": "Kiro from Gold Coast",
+   "include_artists": [
+    "Kiro"
+   ],
+   "include_albums": [
+    "Gold Coast"
+   ]
+  },
+  {
+   "query": "Calder",
+   "expect": [
+    "ambiguous"
+   ]
+  },
+  {
+   "query": "only Vance",
+   "include_artists": [
+    "Marlo Vance"
+   ]
+  },
+  {
+   "query": "Solstice and Okonjo",
+   "include_artists": [
+    "Nia Solstice",
+    "Kai Okonjo"
+   ]
+  },
+  {
+   "query": "true random",
+   "shuffle_mode": "random"
+  },
+  {
+   "query": "completely random order",
+   "shuffle_mode": "random"
+  },
+  {
+   "query": "shuffle Kiro randomly",
+   "include_artists": [
+    "Kiro"
+   ],
+   "shuffle_mode": "random"
+  },
+  {
+   "query": "recently added first",
+   "shuffle_mode": "recently_added"
+  },
+  {
+   "query": "newest first, only Marlo Vance",
+   "include_artists": [
+    "Marlo Vance"
+   ],
+   "shuffle_mode": "recently_added"
+  },
+  {
+   "query": "what I added recently from J. Calder",
+   "include_artists": [
+    "J. Calder"
+   ],
+   "shuffle_mode": "recently_added"
+  },
+  {
+   "query": "mix it up so artists are spread out",
+   "shuffle_mode": "balanced"
+  },
+  {
+   "query": "avoid consecutive songs by the same artist",
+   "shuffle_mode": "balanced",
+   "minimum_artist_gap": 1
+  },
+  {
+   "query": "no same artist within 3 songs",
+   "shuffle_mode": "balanced",
+   "minimum_artist_gap": 3
+  },
+  {
+   "query": "at least 4 songs between the same artist",
+   "shuffle_mode": "balanced",
+   "minimum_artist_gap": 4
+  },
+  {
+   "query": "at least two tracks apart",
+   "shuffle_mode": "balanced",
+   "minimum_artist_gap": 2
+  },
+  {
+   "query": "keep artists 5 songs apart, strict",
+   "shuffle_mode": "balanced",
+   "minimum_artist_gap": 5,
+   "strict_constraints": true
+  },
+  {
+   "query": "gap of 3",
+   "shuffle_mode": "balanced",
+   "minimum_artist_gap": 3
+  },
+  {
+   "query": "Marlo Vance and J. Calder, never the same artist twice in a row",
+   "include_artists": [
+    "Marlo Vance",
+    "J. Calder"
+   ],
+   "shuffle_mode": "balanced",
+   "minimum_artist_gap": 1
+  },
+  {
+   "query": "Drake-style mix: Marlo Vance and Kiro with no back to back repeats",
+   "include_artists": [
+    "Marlo Vance",
+    "Kiro"
+   ],
+   "shuffle_mode": "balanced",
+   "minimum_artist_gap": 1,
+   "expect": [
+    "unrecognized"
+   ]
+  },
+  {
+   "query": "random order, seed 42",
+   "shuffle_mode": "random",
+   "seed": 42
+  },
+  {
+   "query": "seed 7 balanced",
+   "shuffle_mode": "balanced",
+   "seed": 7
+  },
+  {
+   "query": "Lumen Hart, seed 12345",
+   "include_artists": [
+    "Lumen Hart"
+   ],
+   "seed": 12345
+  },
+  {
+   "query": "random but no same artist back to back",
+   "shuffle_mode": "balanced",
+   "minimum_artist_gap": 1
+  },
+  {
+   "query": "primary artist only Marlo Vance",
+   "include_artists": [
+    "Marlo Vance"
+   ],
+   "primary_artist_only": true
+  },
+  {
+   "query": "Marlo Vance without features",
+   "include_artists": [
+    "Marlo Vance"
+   ],
+   "primary_artist_only": true
+  },
+  {
+   "query": "J. Calder no collabs",
+   "include_artists": [
+    "J. Calder"
+   ],
+   "primary_artist_only": true
+  },
+  {
+   "query": "songs featuring Ivy Calder",
+   "include_artists": [
+    "Ivy Calder"
+   ]
+  },
+  {
+   "query": "anything with Kai Okonjo on it",
+   "include_artists": [
+    "Kai Okonjo"
+   ]
+  },
+  {
+   "query": "only Kendrick Lamar",
+   "expect": [
+    "unrecognized"
+   ]
+  },
+  {
+   "query": "play Taylor Swift",
+   "expect": [
+    "unrecognized"
+   ]
+  },
+  {
+   "query": "songs from Abbey Road",
+   "expect": [
+    "unrecognized"
+   ]
+  },
+  {
+   "query": "Marlo Vance and Frank Ocean",
+   "include_artists": [
+    "Marlo Vance"
+   ],
+   "expect": [
+    "unrecognized"
+   ]
+  },
+  {
+   "query": "no Beyonce",
+   "expect": [
+    "unrecognized"
+   ]
+  },
+  {
+   "query": "most played Kiro songs",
+   "include_artists": [
+    "Kiro"
+   ],
+   "expect": [
+    "unsupported"
+   ]
+  },
+  {
+   "query": "Marlo Vance's biggest hits",
+   "include_artists": [
+    "Marlo Vance"
+   ],
+   "expect": [
+    "unsupported"
+   ]
+  },
+  {
+   "query": "deep cuts only",
+   "expect": [
+    "unsupported"
+   ]
+  },
+  {
+   "query": "add songs similar to Lumen Hart",
+   "include_artists": [
+    "Lumen Hart"
+   ],
+   "expect": [
+    "unsupported"
+   ]
+  },
+  {
+   "query": "chill songs for studying",
+   "expect": [
+    "unsupported"
+   ]
+  },
+  {
+   "query": "only songs from the 90s",
+   "expect": [
+    "unsupported"
+   ]
+  },
+  {
+   "query": "delete Kiro from my playlist",
+   "expect": [
+    "unsupported"
+   ]
+  },
+  {
+   "query": "start playing it on my phone",
+   "expect": [
+    "unsupported"
+   ]
+  },
+  {
+   "query": "high energy tracks",
+   "expect": [
+    "unsupported"
+   ]
+  },
+  {
+   "query": "songs not in this playlist by Kiro",
+   "include_artists": [
+    "Kiro"
+   ],
+   "expect": [
+    "unsupported"
+   ]
+  },
+  {
+   "query": "no explicit songs",
+   "expect": [
+    "unsupported"
+   ]
+  },
+  {
+   "query": "only Kiro but exclude Kiro",
+   "expect": [
+    "contradiction"
+   ]
+  },
+  {
+   "query": "Overlook but not Overlook",
+   "expect": [
+    "contradiction"
+   ]
+  },
+  {
+   "query": "ONLY MARLO VANCE!!!",
+   "include_artists": [
+    "Marlo Vance"
+   ]
+  },
+  {
+   "query": "j calder from the long season",
+   "include_artists": [
+    "J. Calder"
+   ],
+   "include_albums": [
+    "The Long Season"
+   ]
+  },
+  {
+   "query": "sable and tide",
+   "include_artists": [
+    "Sable & Tide"
+   ]
+  },
+  {
+   "query": "june and the hollows, no repeats in a row",
+   "include_artists": [
+    "June & The Hollows"
+   ],
+   "shuffle_mode": "balanced",
+   "minimum_artist_gap": 1
+  },
+  {
+   "query": "Marlo Vance & J. Calder",
+   "include_artists": [
+    "Marlo Vance",
+    "J. Calder"
+   ]
+  },
+  {
+   "query": "noel archer + saffron hill",
+   "include_artists": [
+    "Noel Archer",
+    "Saffron Hill"
+   ]
+  },
+  {
+   "query": "Cobalt Youth; Zane Holloway; Mira Sol",
+   "include_artists": [
+    "Cobalt Youth",
+    "Zane Holloway",
+    "Mira Sol"
+   ]
+  },
+  {
+   "query": "give me some Opal Rivers",
+   "include_artists": [
+    "Opal Rivers"
+   ]
+  },
+  {
+   "query": "I want J. Calder but nothing from Roads Home",
+   "include_artists": [
+    "J. Calder"
+   ],
+   "exclude_albums": [
+    "Roads Home"
+   ]
+  },
+  {
+   "query": "Marlo Vance excluding After Hours Club and Southside Tapes, random",
+   "include_artists": [
+    "Marlo Vance"
+   ],
+   "exclude_albums": [
+    "After Hours Club",
+    "Southside Tapes"
+   ],
+   "shuffle_mode": "random"
+  },
+  {
+   "query": "everything"
+  },
+  {
+   "query": "shuffle my playlist"
+  }
+ ]
+}
