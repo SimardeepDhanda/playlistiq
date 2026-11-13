@@ -92,7 +92,29 @@ come back as **ambiguities** with options, and no runnable spec is returned unti
 Names not in the playlist come back as **unrecognized**. Editions of one album ("Overlook" and
 "Overlook (Deluxe)") are applied together, with a note.
 
-## Spotify integration (in progress)
+## Live mode: sign-in, storage and export
+
+- **Sign-in** uses Authorization Code with PKCE. `/api/auth/spotify/start` stores the state and
+  code verifier in a signed, HttpOnly, 10-minute cookie; the callback checks the state in constant
+  time before exchanging the code.
+- **Sessions** are random tokens in an HttpOnly, SameSite=Lax cookie; the database stores only
+  their SHA-256 hash. Spotify tokens are encrypted at rest with Fernet, using a key derived from
+  `PLAYLISTIQ_SESSION_SECRET`.
+- **CSRF**: every write under `/api` must carry an `X-PlaylistIQ: 1` header, which a cross-site
+  page cannot add without passing CORS.
+- **Storage** (SQLAlchemy 2 + Alembic; SQLite by default, Postgres supported): `users`,
+  `spotify_connections`, `sessions`, `playlist_caches`, `export_jobs`, `export_job_batches`. An
+  imported playlist is stored as one JSON document per user with a 24-hour expiry instead of
+  permanent track, artist and album tables, to keep retained Spotify data to what the preview
+  needs. Deleting a user cascades to all of it.
+- **Ownership**: Spotify playlists are only ever read from the signed-in user's own cache. Another
+  user's playlist or export job is indistinguishable from one that does not exist.
+- **Export** creates a private playlist, saves its ID immediately, adds items in batches of 100,
+  and records each batch. A retry reuses the saved playlist, first reads how many items it already
+  holds (adding is not idempotent on Spotify's side), and stops rather than guessing if the
+  playlist was edited in between. The finished playlist is read back and compared item by item.
+
+## Spotify client
 
 `spotify/client.py` follows `next` links, waits for `Retry-After` on 429 (up to a cap), surfaces
 `QUOTA_EXCEEDED` immediately, backs off with jitter on 5xx and network errors, refreshes an

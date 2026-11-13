@@ -1,8 +1,8 @@
 """Where playlists come from.
 
 ``PlaylistSource`` is the seam between the API and data: demo mode reads the
-synthetic dataset; live mode (``app.spotify``) will read the signed-in user's
-cached Spotify playlists and must enforce ownership in ``get``.
+synthetic dataset; live mode reads the signed-in user's own imported Spotify
+playlists (``app.services.live``).
 """
 
 from __future__ import annotations
@@ -10,20 +10,28 @@ from __future__ import annotations
 from collections import Counter
 from typing import Protocol
 
+from sqlalchemy.orm import Session as DB
+
 from app.config import Settings
+from app.db.models import User
 from app.services.demo import Playlist, load_demo_playlists
+from app.services.live import load_cached
 
 
 class PlaylistNotFound(LookupError):
     pass
 
 
+class PlaylistNotImported(LookupError):
+    """A Spotify playlist the user may read, but which has not been imported yet."""
+
+
 class PlaylistSource(Protocol):
     mode: str
 
-    def list(self) -> list[Playlist]: ...
+    async def list(self) -> list[Playlist]: ...
 
-    def get(self, playlist_id: str) -> Playlist: ...
+    async def get(self, playlist_id: str) -> Playlist: ...
 
 
 class DemoPlaylistSource:
@@ -32,14 +40,39 @@ class DemoPlaylistSource:
     def __init__(self, settings: Settings) -> None:
         self._playlists = load_demo_playlists(settings.demo_data_path)
 
-    def list(self) -> list[Playlist]:
+    async def list(self) -> list[Playlist]:
         return list(self._playlists.values())
 
-    def get(self, playlist_id: str) -> Playlist:
+    async def get(self, playlist_id: str) -> Playlist:
         try:
             return self._playlists[playlist_id]
         except KeyError:
             raise PlaylistNotFound(playlist_id) from None
+
+
+class CombinedPlaylistSource:
+    """Demo playlists for everyone, plus the signed-in user's imported Spotify playlists.
+
+    Spotify playlists are looked up only in the current user's own cache, so one
+    user can never read another user's imported data.
+    """
+
+    def __init__(self, demo: DemoPlaylistSource, db: DB | None, user: User | None) -> None:
+        self.demo, self.db, self.user = demo, db, user
+        self.mode = "live" if user else "demo"
+
+    async def list(self) -> list[Playlist]:
+        return await self.demo.list()
+
+    async def get(self, playlist_id: str) -> Playlist:
+        if playlist_id.startswith("demo-"):
+            return await self.demo.get(playlist_id)
+        if self.db is None or self.user is None:
+            raise PlaylistNotFound(playlist_id)
+        cached = load_cached(self.db, self.user, playlist_id)
+        if cached is None:
+            raise PlaylistNotImported(playlist_id)
+        return cached
 
 
 def facets(playlist: Playlist) -> tuple[list[dict[str, object]], list[dict[str, object]]]:

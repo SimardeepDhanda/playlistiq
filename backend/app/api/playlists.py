@@ -5,15 +5,17 @@ from typing import Annotated
 
 from fastapi import APIRouter, HTTPException, Query
 
-from app.api.deps import PlaylistDep, SourceDep
+from app.api.deps import DBDep, PlaylistDep, PlaylistId, SettingsDep, SourceDep, SpotifyDep, UserDep
 from app.api.schemas import (
     EntryOut,
     Facets,
+    ImportOut,
     OrderMetricsOut,
     PlaylistList,
     PlaylistSummary,
     PreviewResponse,
     QueueItem,
+    SpotifyPlaylistOut,
     Timing,
     TracksPage,
     ViolationOut,
@@ -23,13 +25,14 @@ from app.engine.metrics import summarize
 from app.engine.models import QuerySpec, ShuffleMode
 from app.engine.shuffle import shuffle
 from app.services.demo import Playlist
+from app.services.live import import_playlist, list_spotify_playlists
 from app.services.playlists import facets
 
 router = APIRouter(prefix="/api/playlists", tags=["playlists"])
 
 
 @router.get("", response_model=PlaylistList)
-def list_playlists(source: SourceDep) -> PlaylistList:
+async def list_playlists(source: SourceDep) -> PlaylistList:
     return PlaylistList(
         mode=source.mode,
         playlists=[
@@ -40,9 +43,26 @@ def list_playlists(source: SourceDep) -> PlaylistList:
                 entry_count=p.entry_count,
                 source=p.source,
             )
-            for p in source.list()
+            for p in await source.list()
         ],
     )
+
+
+@router.get("/spotify", response_model=list[SpotifyPlaylistOut])
+async def list_spotify(user: UserDep, db: DBDep, client: SpotifyDep) -> list[SpotifyPlaylistOut]:
+    """The signed-in user's Spotify playlists, with whether each can be imported."""
+    return [SpotifyPlaylistOut(**p.__dict__) for p in await list_spotify_playlists(db, user, client)]
+
+
+@router.post("/{playlist_id}/sync", response_model=ImportOut)
+async def sync_playlist(
+    playlist_id: PlaylistId, user: UserDep, db: DBDep, client: SpotifyDep, settings: SettingsDep
+) -> ImportOut:
+    """Import (or refresh) every page of a Spotify playlist into this user's cache."""
+    if playlist_id.startswith("demo-"):
+        raise HTTPException(status_code=400, detail="Demo playlists do not need importing")
+    result = await import_playlist(db, user, client, playlist_id, settings.playlist_cache_hours)
+    return ImportOut(**result.__dict__)
 
 
 @router.get("/{playlist_id}/tracks", response_model=TracksPage)

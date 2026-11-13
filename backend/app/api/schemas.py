@@ -18,6 +18,25 @@ class PlaylistSummary(BaseModel):
     source: str
 
 
+class SpotifyPlaylistOut(BaseModel):
+    id: str
+    name: str
+    description: str
+    owner_name: str
+    item_count: int | None
+    readable: bool
+    imported: bool
+    synced_at: datetime | None
+
+
+class ImportOut(BaseModel):
+    playlist_id: str
+    name: str
+    entry_count: int
+    skipped_unavailable: int
+    skipped_episodes: int
+
+
 class PlaylistList(BaseModel):
     mode: str
     playlists: list[PlaylistSummary]

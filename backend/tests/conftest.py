@@ -1,6 +1,15 @@
 from __future__ import annotations
 
+import os
+import tempfile
 from collections.abc import Sequence
+from pathlib import Path
+
+# Isolated settings for the whole test run, set before the app reads them.
+_TMP = Path(tempfile.mkdtemp(prefix="playlistiq-tests-"))
+os.environ["PLAYLISTIQ_DATABASE_URL"] = f"sqlite:///{_TMP / 'test.db'}"
+os.environ["PLAYLISTIQ_SESSION_SECRET"] = "test-secret-not-for-production"
+os.environ.pop("PLAYLISTIQ_SPOTIFY_CLIENT_ID", None)
 
 import pytest
 

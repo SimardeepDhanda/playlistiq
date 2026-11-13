@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { api } from "@/lib/api";
+import { api, ApiError } from "@/lib/api";
 import { hasFilters, setState, stateOf } from "@/lib/spec";
 import { DEFAULT_SPEC, type EntityOption, type Facets, type ParseResult, type PreviewResponse, type QuerySpec } from "@/lib/types";
 import { EntityFilter } from "./EntityFilter";
@@ -15,17 +15,54 @@ export function Workspace({ playlistId }: { playlistId: string }) {
   const [facets, setFacets] = useState<Facets | null>(null);
   const [spec, setSpec] = useState<QuerySpec>(DEFAULT_SPEC);
   const [preview, setPreview] = useState<PreviewResponse | null>(null);
+  const [previewVersion, setPreviewVersion] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [playlistName, setPlaylistName] = useState<string>("");
+  const [needsImport, setNeedsImport] = useState(false);
+  const [importing, setImporting] = useState(false);
+  const live = !playlistId.startsWith("demo-");
+
+  const loadFacets = useCallback(() => {
+    api
+      .facets(playlistId)
+      .then(setFacets)
+      .catch((e: Error) => {
+        if (e instanceof ApiError && e.status === 409) setNeedsImport(true);
+        else if (e instanceof ApiError && e.status === 404 && live)
+          setError("Connect Spotify and import this playlist to use it.");
+        else setError(e.message);
+      });
+  }, [playlistId, live]);
 
   useEffect(() => {
-    api.facets(playlistId).then(setFacets).catch((e: Error) => setError(e.message));
-    api
-      .playlists()
-      .then((r) => setPlaylistName(r.playlists.find((p) => p.id === playlistId)?.name ?? playlistId))
-      .catch(() => setPlaylistName(playlistId));
-  }, [playlistId]);
+    loadFacets();
+    if (live) {
+      api
+        .spotifyPlaylists()
+        .then((r) => setPlaylistName(r.find((p) => p.id === playlistId)?.name ?? "Spotify playlist"))
+        .catch(() => setPlaylistName("Spotify playlist"));
+    } else {
+      api
+        .playlists()
+        .then((r) => setPlaylistName(r.playlists.find((p) => p.id === playlistId)?.name ?? playlistId))
+        .catch(() => setPlaylistName(playlistId));
+    }
+  }, [playlistId, live, loadFacets]);
+
+  async function importNow() {
+    setImporting(true);
+    setError(null);
+    try {
+      await api.sync(playlistId);
+      setNeedsImport(false);
+      loadFacets();
+    } catch (e) {
+      setError((e as Error).message);
+    } finally {
+      setImporting(false);
+    }
+  }
 
   const artistRows = useMemo(
     () =>
@@ -49,6 +86,7 @@ export function Workspace({ playlistId }: { playlistId: string }) {
       try {
         const p = await api.preview(playlistId, s);
         setPreview(p);
+        setPreviewVersion((v) => v + 1);
       } catch (e) {
         setError((e as Error).message);
       } finally {
@@ -87,6 +125,19 @@ export function Workspace({ playlistId }: { playlistId: string }) {
         <p role="alert" className="rounded-md bg-danger-soft p-3 text-danger">
           {error}
         </p>
+      )}
+      {needsImport && (
+        <div className="space-y-2 rounded-md border border-border bg-surface p-4 text-sm">
+          <p>This playlist has not been imported yet, or its 24-hour copy expired.</p>
+          <button
+            type="button"
+            onClick={importNow}
+            disabled={importing}
+            className="rounded-md bg-accent px-4 py-2 font-medium text-white disabled:opacity-50 dark:text-black"
+          >
+            {importing ? "Importing…" : "Import from Spotify"}
+          </button>
+        </div>
       )}
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-[360px_1fr]">
@@ -139,7 +190,9 @@ export function Workspace({ playlistId }: { playlistId: string }) {
           {preview ? (
             <>
               <QueuePreview preview={preview} />
-              {preview.queue.length > 0 && <ExportPanel count={preview.queue.length} />}
+              {preview.queue.length > 0 && (
+                <ExportPanel key={previewVersion} preview={preview} playlistName={playlistName || "PlaylistIQ"} live={live} />
+              )}
             </>
           ) : (
             <div className="rounded-lg border border-dashed border-border p-10 text-center text-muted">

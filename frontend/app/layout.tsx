@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ModeBanner } from "@/components/ModeBanner";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -27,10 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </Link>
           </nav>
         </header>
-        <div className="border-b border-border bg-warn-soft px-4 py-2 text-center text-sm text-warn" role="note">
-          Demo mode: these playlists are synthetic. Every artist, album and song is made up, and no Spotify
-          account is connected.
-        </div>
+        <ModeBanner />
         <main id="main" className="mx-auto max-w-6xl px-4 py-8">
           {children}
         </main>

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ConnectButton } from "@/components/ConnectButton";
 
 const examples = [
   "Only Marlo Vance",
@@ -26,12 +27,7 @@ export default function Landing() {
           >
             Try the demo
           </Link>
-          <span
-            className="rounded-md border border-border px-5 py-2.5 text-muted"
-            title="Live Spotify access is waiting on a registered Spotify developer app."
-          >
-            Connect Spotify (coming soon)
-          </span>
+          <ConnectButton />
         </div>
       </section>
 

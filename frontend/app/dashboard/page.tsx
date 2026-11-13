@@ -4,11 +4,14 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { api } from "@/lib/api";
 import type { PlaylistSummary } from "@/lib/types";
+import { useAuth } from "@/lib/useAuth";
+import { SpotifyPlaylists } from "@/components/SpotifyPlaylists";
 
 export default function Dashboard() {
   const [playlists, setPlaylists] = useState<PlaylistSummary[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [query, setQuery] = useState("");
+  const auth = useAuth();
 
   useEffect(() => {
     api
@@ -27,7 +30,9 @@ export default function Dashboard() {
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <h1 className="text-2xl font-semibold">Your playlists</h1>
-          <p className="text-sm text-muted">Demo playlists with synthetic songs.</p>
+          <p className="text-sm text-muted">
+            {auth?.connected ? "Your Spotify playlists, plus demo playlists to experiment with." : "Demo playlists with synthetic songs."}
+          </p>
         </div>
         <label className="flex flex-col text-sm">
           <span className="sr-only">Search playlists</span>
@@ -40,6 +45,9 @@ export default function Dashboard() {
           />
         </label>
       </div>
+
+      {auth?.connected && <SpotifyPlaylists query={query} />}
+      {auth?.connected && <h2 className="pt-4 text-lg font-semibold">Demo playlists</h2>}
 
       {error && (
         <p role="alert" className="rounded-md bg-danger-soft p-3 text-danger">

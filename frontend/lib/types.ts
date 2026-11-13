@@ -145,3 +145,45 @@ export interface Health {
   demo_mode: boolean;
   spotify_configured: boolean;
 }
+
+export interface AuthState {
+  spotify_configured: boolean;
+  connected: boolean;
+  display_name: string | null;
+}
+
+export interface SpotifyPlaylist {
+  id: string;
+  name: string;
+  description: string;
+  owner_name: string;
+  item_count: number | null;
+  readable: boolean;
+  imported: boolean;
+  synced_at: string | null;
+}
+
+export interface ImportResult {
+  playlist_id: string;
+  name: string;
+  entry_count: number;
+  skipped_unavailable: number;
+  skipped_episodes: number;
+}
+
+export type ExportState = "pending" | "running" | "completed" | "failed";
+
+export interface ExportStatus {
+  id: string;
+  status: ExportState;
+  source_playlist_id: string;
+  name: string;
+  total_items: number;
+  completed_items: number;
+  skipped_items: number;
+  batches_done: number;
+  destination_playlist_id: string | null;
+  destination_url: string | null;
+  error: string | null;
+  attempts: number;
+}

@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from collections.abc import Iterator
+
 import pytest
 import respx
 from fastapi.testclient import TestClient
@@ -8,8 +10,9 @@ from app.main import app
 
 
 @pytest.fixture(scope="module")
-def client() -> TestClient:
-    return TestClient(app)
+def client() -> Iterator[TestClient]:
+    with TestClient(app, headers={"X-PlaylistIQ": "1"}) as c:
+        yield c
 
 
 def test_health(client: TestClient) -> None:
@@ -107,3 +110,9 @@ def test_parse_query(client: TestClient) -> None:
     assert len(body["spec"]["include_album_ids"]) == 1
     too_long = {"playlist_id": "demo-late-night", "text": "x" * 501}
     assert client.post("/api/parse-query", json=too_long).status_code == 422
+
+
+def test_writes_without_csrf_header_are_refused() -> None:
+    with TestClient(app) as c:
+        r = c.post("/api/playlists/demo-late-night/preview", json={})
+        assert r.status_code == 403
